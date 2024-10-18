@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Destination Booking Website</title>
+    <style>
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input, select {
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        .phone-input {
+            display: flex;
+            align-items: center;
+        }
+        #country-code {
+            width: 60px;
+            margin-right: 5px;
+        }
+        #phone {
+            flex-grow: 1;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Register with Us</h2>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="country">Country:</label>
+            <select id="country" name="country" required>
+                <option value="">Select Country</option>
+                <option value="India" data-code="+91">India</option>
+                <option value="USA" data-code="+1">USA</option>
+                <option value="UK" data-code="+44">UK</option>
+                <option value="Australia" data-code="+61">Australia</option>
+            </select>
+
+            <label for="phone">Phone Number:</label>
+            <div class="phone-input">
+                <input type="text" id="country-code" name="country-code" readonly>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <label for="district">District:</label>
+            <select id="district" name="district" required>
+                <option value="">Select District</option>
+            </select>
+
+            <button type="submit">Register Me</button>
+        </form>
+    </div>
+
+    <script>
+        const countrySelect = document.getElementById('country');
+        const districtSelect = document.getElementById('district');
+        const countryCodeInput = document.getElementById('country-code');
+
+        countrySelect.addEventListener('change', (e) => {
+            const country = e.target.value;
+            const selectedOption = e.target.options[e.target.selectedIndex];
+            const countryCode = selectedOption.getAttribute('data-code');
+
+            countryCodeInput.value = countryCode || '';
+
+            const districtOptions = {
+                'India': ['Delhi', 'Mumbai', 'Bangalore', 'Hyderabad'],
+                'USA': ['New York', 'Los Angeles', 'Chicago', 'Houston'],
+                'UK': ['London', 'Manchester', 'Birmingham', 'Leeds'],
+                'Australia': ['Sydney', 'Melbourne', 'Brisbane', 'Perth']
+            };
+
+            const options = districtOptions[country] || [];
+            districtSelect.innerHTML = '<option value="">Select District</option>';
+            options.forEach((option) => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.textContent = option;
+                districtSelect.appendChild(opt);
+            });
+        });
+    </script>
+</body>
+</html>
